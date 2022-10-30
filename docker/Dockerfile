@@ -2,7 +2,7 @@ FROM php:8.1.12-fpm
 
 WORKDIR /var/www/html
 
-ARG DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
 RUN apt install -y zip && apt-utils
