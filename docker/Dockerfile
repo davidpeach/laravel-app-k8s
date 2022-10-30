@@ -5,7 +5,7 @@ WORKDIR /var/www/html
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
-RUN apt install -y zip && apt-utils
+RUN apt install -y zip
 
 RUN echo "UTC" > /etc/timezone
 
