@@ -28,7 +28,7 @@ jobs:
       run: docker push ${{ secrets.DO_REGISTRY_ENDPOINT }}/laravel-app-k8s:$(echo $GITHUB_SHA | head -c7)
 
     - name: Update deployment file
-      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/asb/static-example:'${TAG}'|' $GITHUB_WORKSPACE/deploy/deployment.yml
+      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ secrets.DO_REGISTRY_ENDPOINT }}/laravel-app-k8s:'${TAG}'|' $GITHUB_WORKSPACE/deploy/deployment.yml
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 newhanover
