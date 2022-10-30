@@ -3,7 +3,7 @@ FROM php:8.1.12-fpm
 WORKDIR /var/www/html
 
 RUN apt-get update
-RUN apt install -y zip
+RUN apt install -y zip && apt-utils
 
 RUN echo "UTC" > /etc/timezone
 
