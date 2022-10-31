@@ -66,11 +66,30 @@ spec:
 #     app: static-example
 
 ---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: hello@davidpeach.me
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+
+---
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-laravel-app
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
   ingressClassName: nginx
   rules:
@@ -84,3 +103,6 @@ spec:
                 name: laravel-app-k8s-service
                 port:
                   number: 80
+tls:
+  - hosts:
+    - test1.davidpeach.me
