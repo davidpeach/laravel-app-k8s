@@ -1,4 +1,4 @@
-FROM php:8.1.12-fpm
+FROM ubuntu:22.04
 
 WORKDIR /var/www/html
 
