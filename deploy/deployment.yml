@@ -71,7 +71,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-laravel-app
-  namespace: backend
 spec:
   ingressClassName: nginx
   rules:
