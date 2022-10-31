@@ -34,6 +34,9 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
 COPY docker/www-overrides.conf /etc/php/${PHP_VERSION}/fpm/pool.d/www2.conf
 
+ARG USER=www
+ARG UID=1000
+
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
 COPY . .
