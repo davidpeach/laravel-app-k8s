@@ -37,7 +37,7 @@ spec:
       - name: laravel-app-k8s
         image: <IMAGE>
         ports:
-        - containerPort: 8000
+        - containerPort: 9000
         resources:
           requests:
             cpu: 100m
@@ -83,4 +83,4 @@ spec:
               service:
                 name: laravel-app-k8s
                 port:
-                  number: 80
+                  number: 9000
