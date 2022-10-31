@@ -103,6 +103,3 @@ spec:
                 name: laravel-app-k8s-service
                 port:
                   number: 80
-tls:
-  - hosts:
-    - test1.davidpeach.me
