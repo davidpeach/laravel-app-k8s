@@ -40,4 +40,4 @@ RUN composer install --ignore-platform-reqs --no-interaction --no-scripts --pref
 
 EXPOSE 80
 
-CMD ["usr/bin/supervisord", "-n"] 
+CMD ["/usr/bin/supervisord", "-n"] 
