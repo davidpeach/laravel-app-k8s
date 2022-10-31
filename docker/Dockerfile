@@ -30,6 +30,7 @@ RUN apt-get install -y --no-install-recommends \
          php${PHP_VERSION}-zip php${PHP_VERSION}-imagick php${PHP_VERSION}-dom php${PHP_VERSION}-bcmath
 
 COPY docker/default.nginx /etc/nginx/sites-available/default
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
@@ -38,3 +39,5 @@ COPY . .
 RUN composer install --ignore-platform-reqs --no-interaction --no-scripts --prefer-dist --no-dev
 
 EXPOSE 80
+
+CMD ["usr/bin/supervisord", "-n"] 
