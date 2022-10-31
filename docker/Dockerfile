@@ -18,4 +18,4 @@ COPY . .
 
 RUN composer install --ignore-platform-reqs --no-interaction --no-scripts --prefer-dist --no-dev
 
-EXPOSE 9000
+EXPOSE 80
