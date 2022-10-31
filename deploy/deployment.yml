@@ -83,4 +83,4 @@ spec:
               service:
                 name: laravel-app-k8s
                 port:
-                  number: 9000
+                  number: 80
