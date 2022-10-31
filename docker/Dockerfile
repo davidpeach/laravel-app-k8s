@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM bitnami/laravel:9.3.9
 
 WORKDIR /var/www/html
 
