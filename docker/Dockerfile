@@ -7,8 +7,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG PHP_VERSION=8.1
 ARG COMPOSER_VERSION=2.3.5
 
-RUN apt-get update
-RUN apt install -y zip
+RUN apt-get update \
+    && apt-get install -y curl gnupg tzdata wget gnupg \
+    && echo "UTC" > /etc/timezone \
+    && dpkg-reconfigure -f noninteractive tzdata
 
 RUN apt-get install -y --no-install-recommends \
         gosu \
@@ -28,9 +30,6 @@ RUN apt-get install -y --no-install-recommends \
          php${PHP_VERSION}-zip php${PHP_VERSION}-imagick php${PHP_VERSION}-dom php${PHP_VERSION}-bcmath && \
 
 COPY docker/default.nginx /etc/nginx/sites-available/default
-
-RUN echo "UTC" > /etc/timezone
-
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
