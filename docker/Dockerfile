@@ -39,10 +39,31 @@ ARG UID=1000
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
-COPY . .
+RUN groupadd -g $UID $USER
+RUN useradd -u $UID -ms /bin/bash -g $USER $USER
 
-RUN composer install --ignore-platform-reqs --no-interaction --no-scripts --prefer-dist --no-dev
+RUN sed -i "1s/.*/user $USER;/" /etc/nginx/nginx.conf && \
+    chown --recursive $USER:$USER /var/www
 
-EXPOSE 80
+# Change current user to dynamic user for app setup
+USER $USER
+
+COPY --chown=${USER}:${USER} database/ database/
+COPY --chown=${USER}:${USER} composer.json composer.lock ./
+
+RUN composer install \
+        --ignore-platform-reqs \
+        --no-interaction \
+        --no-scripts \
+        --prefer-dist \
+        --no-dev
+
+# Add general application code last to preserve cache as much as possible
+COPY --chown=${USER}:${USER} . .
+RUN rm -rf public
+COPY --chown=${USER}:${USER} public/index.php public/index.php
+
+# Change current user back to root
+USER root
 
 CMD ["/usr/bin/supervisord", "-n"] 
