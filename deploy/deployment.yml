@@ -69,13 +69,13 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: letsencrypt-staging
+  name: letsencrypt-issuer
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     email: hello@davidpeach.me
     privateKeySecretRef:
-      name: letsencrypt-staging
+      name: letsencrypt-issuer
     solvers:
       - http01:
           ingress:
@@ -88,7 +88,7 @@ kind: Ingress
 metadata:
   name: ingress-laravel-app-k8s
   annotations:
-    cert-manager.io/issuer: "letsencrypt"
+    cert-manager.io/issuer: "letsencrypt-issuer"
 spec:
   ingressClassName: nginx
   rules:
