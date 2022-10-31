@@ -37,5 +37,5 @@ jobs:
       run: kubectl apply -f $GITHUB_WORKSPACE/deploy/deployment.yml
 
     - name: Verify deployment
-      run: kubectl rollout status deployment/laravel-app-k8s
+      run: kubectl rollout status deployment/laravel-app-k8s-deployment
 
