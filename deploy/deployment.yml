@@ -69,7 +69,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: letsencrypt-nginx
+  name: letsencrypt-test1-davidpeach-me
   # namespace: backend
 spec:
   # ACME issuer configuration
@@ -78,7 +78,7 @@ spec:
   # `privateKeySecretRef` - Kubernetes Secret to store the automatically generated ACME account private key
   acme:
     email: hello@davidpeach.me
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-nginx-private-key
     solvers:
@@ -92,14 +92,27 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-echo
+  name: ingress-laravel-app-k8s
   # namespace: backend
   annotations:
-    cert-manager.io/issuer: letsencrypt-nginx
+    cert-manager.io/issuer: letsencrypt-test1-davidpeach-me
 spec:
+
   tls:
   - hosts:
     - test1.davidpeach.me
-    secretName: letsencrypt-nginx
+    secretName: laravel-app-k8s-staging-tls
+
+  ingressClassName: nginx
+
   rules:
     - host: test1.davidpeach.me
+      http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: laravel-app-k8s-service
+              port:
+                number: 80
