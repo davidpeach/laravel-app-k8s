@@ -78,7 +78,7 @@ spec:
   # `privateKeySecretRef` - Kubernetes Secret to store the automatically generated ACME account private key
   acme:
     email: hello@davidpeach.me
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-nginx-private-key
     solvers:
@@ -101,7 +101,7 @@ spec:
   tls:
   - hosts:
     - test1.davidpeach.me
-    secretName: laravel-app-k8s-staging-tls
+    secretName: laravel-app-k8s--tls
 
   ingressClassName: nginx
 
