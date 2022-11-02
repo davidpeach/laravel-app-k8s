@@ -8,7 +8,7 @@ ARG PHP_VERSION=8.1
 ARG COMPOSER_VERSION=2.3.5
 
 RUN apt-get update \
-    && apt-get install -y curl gnupg tzdata wget gnupg \
+    && apt-get install -y curl gnupg tzdata wget gnupg git \
     && echo "UTC" > /etc/timezone \
     && dpkg-reconfigure -f noninteractive tzdata
 
