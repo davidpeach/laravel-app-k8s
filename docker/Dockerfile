@@ -42,8 +42,8 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 RUN groupadd -g $UID $USER
 RUN useradd -u $UID -ms /bin/bash -g $USER $USER
 
-RUN sed -i "1s/.*/user $USER;/" /etc/nginx/nginx.conf && \
-    chown --recursive $USER:$USER /var/www
+# RUN sed -i "1s/.*/user $USER;/" /etc/nginx/nginx.conf && \
+#     chown --recursive $USER:$USER /var/www
 
 # Change current user to dynamic user for app setup
 USER $USER
