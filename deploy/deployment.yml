@@ -48,17 +48,21 @@ spec:
             cpu: 100m
           limits:
             cpu: 100m
-        # volumeMounts:
-        #   - name: shared-files
-        #     mountPath: /var/www/html
+        volumeMounts:
+          - name: shared-files
+            mountPath: /var/www/html
         #     readOnly: true
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "cp -r /app/. /var/www/html"]
       - name: nginx
         image: nginx
         ports:
         - containerPort: 80
-        # volumeMounts:
-        #   - name: shared-files
-        #     mountPath: /var/www/html
+        volumeMounts:
+          - name: shared-files
+            mountPath: /var/www/html
         #   - name: nginx-mount
         #     mountPath: /etc/nginx/sites-available/
 ---
