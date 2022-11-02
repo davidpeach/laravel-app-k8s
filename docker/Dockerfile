@@ -65,5 +65,5 @@ COPY --chown=${USER}:${USER} public/index.php public/index.php
 
 # Change current user back to root
 # USER root
-CMD ["php8.1-fpm"]
+# CMD ["php8.1-fpm"]
 # CMD ["/usr/bin/supervisord", "-n"] 
