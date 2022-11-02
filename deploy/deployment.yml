@@ -35,6 +35,7 @@ spec:
     spec:
       volumes:
         - name: nginx-mount
+          emptyDir: {}
       containers:
       - name: laravel-app-k8s
         image: <IMAGE>
@@ -54,27 +55,8 @@ spec:
         volumeMounts:
           - name: nginx-mount
             mountPath: /etc/nginx/sites-available/default
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: static-example-service
-#   annotations:
-#     external-dns.alpha.kubernetes.io/hostname: "doctl-action.do-api.dev"
-#     service.beta.kubernetes.io/do-loadbalancer-name: "doctl-action.do-api.dev"
-#     service.beta.kubernetes.io/do-loadbalancer-certificate-id: "913a4f25-dd44-47e0-8588-eb09f095c7e2"
-#     service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
-# spec:
-#   type: LoadBalancer
-#   ports:
-#     - name: https
-#       protocol: TCP
-#       port: 443
-#       targetPort: 5000
-#   selector:
-#     app: static-example
-
 ---
+
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
