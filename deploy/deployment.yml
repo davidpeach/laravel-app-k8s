@@ -51,6 +51,7 @@ spec:
         volumeMounts:
           - name: shared-files
             mountPath: /var/www/html
+            readOnly: true
       - name: nginx
         image: nginx
         ports:
