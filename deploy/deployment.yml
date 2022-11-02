@@ -51,8 +51,6 @@ spec:
         volumeMounts:
           - name: shared-files
             mountPath: /var/www/html
-          - name: nginx-mount
-            mountPath: /var/www/html/docker/nginx/
       - name: nginx
         image: nginx
         ports:
