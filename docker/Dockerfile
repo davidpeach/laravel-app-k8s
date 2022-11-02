@@ -1,5 +1,6 @@
 FROM php:8.1.12-fpm
 
+RUN mkdir /app
 WORKDIR /app
 
 ENV DEBIAN_FRONTEND=noninteractive
