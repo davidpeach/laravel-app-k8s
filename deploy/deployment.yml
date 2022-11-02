@@ -48,19 +48,19 @@ spec:
             cpu: 100m
           limits:
             cpu: 100m
-        volumeMounts:
-          - name: shared-files
-            mountPath: /var/www/html
-            readOnly: true
+        # volumeMounts:
+        #   - name: shared-files
+        #     mountPath: /var/www/html
+        #     readOnly: true
       - name: nginx
         image: nginx
         ports:
         - containerPort: 80
-        volumeMounts:
-          - name: shared-files
-            mountPath: /var/www/html
-          - name: nginx-mount
-            mountPath: /etc/nginx/sites-available/
+        # volumeMounts:
+        #   - name: shared-files
+        #     mountPath: /var/www/html
+        #   - name: nginx-mount
+        #     mountPath: /etc/nginx/sites-available/
 ---
 
 apiVersion: cert-manager.io/v1
