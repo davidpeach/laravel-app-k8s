@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM php:8.1.12-fpm
 
 WORKDIR /var/www/html
 
@@ -29,8 +29,8 @@ RUN apt-get install -y --no-install-recommends \
          php${PHP_VERSION}-curl php${PHP_VERSION}-sqlite3 php${PHP_VERSION}-xdebug php${PHP_VERSION}-soap \
          php${PHP_VERSION}-zip php${PHP_VERSION}-imagick php${PHP_VERSION}-dom php${PHP_VERSION}-bcmath
 
-COPY docker/default.nginx /etc/nginx/sites-available/default
-COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# COPY docker/default.nginx /etc/nginx/sites-available/default
+# COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
 COPY docker/www-overrides.conf /etc/php/${PHP_VERSION}/fpm/pool.d/www2.conf
 
@@ -64,6 +64,6 @@ RUN rm -rf public
 COPY --chown=${USER}:${USER} public/index.php public/index.php
 
 # Change current user back to root
-USER root
-
-CMD ["/usr/bin/supervisord", "-n"] 
+# USER root
+CMD ["php8.1-fpm"]
+# CMD ["/usr/bin/supervisord", "-n"] 

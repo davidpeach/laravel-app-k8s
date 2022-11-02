@@ -34,7 +34,7 @@ spec:
         app: laravel-app-k8s
     spec:
       volumes:
-        nginx-mount
+        - name: nginx-mount
       containers:
       - name: laravel-app-k8s
         image: <IMAGE>
@@ -46,14 +46,14 @@ spec:
           limits:
             cpu: 100m
         volumeMounts:
-          name: nginx-mount
-          mountPath: /var/www/html/docker/default.nginx
-          readOnly: true
+          - name: nginx-mount
+            mountPath: /var/www/html/docker/default.nginx
+            readOnly: true
       - name: nginx
         image: nginx
         volumeMounts:
-          name: nginx-mount
-          mountPath: /etc/nginx/sites-available/default
+          - name: nginx-mount
+            mountPath: /etc/nginx/sites-available/default
 # ---
 # apiVersion: v1
 # kind: Service
