@@ -1,7 +1,5 @@
 FROM php:8.1.12-fpm
 
-RUN mkdir /app
-WORKDIR /app
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -32,8 +30,8 @@ RUN apt-get update \
 
 # COPY docker/default.nginx /etc/nginx/sites-available/default
 # COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY docker/php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
-COPY docker/www-overrides.conf /etc/php/${PHP_VERSION}/fpm/pool.d/www2.conf
+# COPY docker/php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
+# COPY docker/www-overrides.conf /etc/php/${PHP_VERSION}/fpm/pool.d/www2.conf
 
 ARG USER=www
 ARG UID=1000
@@ -42,7 +40,9 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 
 RUN groupadd -g $UID $USER
 RUN useradd -u $UID -ms /bin/bash -g $USER $USER
-
+RUN mkdir /data
+RUN chown ${USER}:$USER /data
+WORKDIR /data
 # RUN sed -i "1s/.*/user $USER;/" /etc/nginx/nginx.conf && \
 #     chown --recursive $USER:$USER /var/www
 
