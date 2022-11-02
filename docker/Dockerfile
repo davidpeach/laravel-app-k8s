@@ -40,8 +40,14 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 
 RUN groupadd -g $UID $USER
 RUN useradd -u $UID -ms /bin/bash -g $USER $USER
+
 RUN mkdir /data
 RUN chown ${USER}:$USER /data
+
+RUN mkdir /nginx
+RUN chown ${USER}:$USER /nginx
+
+
 WORKDIR /data
 # RUN sed -i "1s/.*/user $USER;/" /etc/nginx/nginx.conf && \
 #     chown --recursive $USER:$USER /var/www
@@ -61,6 +67,8 @@ RUN composer install \
 
 # Add general application code last to preserve cache as much as possible
 COPY --chown=${USER}:${USER} . .
+COPY --chown=${USER}:${USER} ./docker/nginx/* /nginx/
+
 RUN rm -rf public
 COPY --chown=${USER}:${USER} public/index.php public/index.php
 
