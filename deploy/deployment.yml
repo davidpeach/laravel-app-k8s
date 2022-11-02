@@ -34,6 +34,8 @@ spec:
         app: laravel-app-k8s
     spec:
       volumes:
+        - name: shared-files
+          emptyDir: {}
         - name: nginx-mount
           emptyDir: {}
       containers:
@@ -47,6 +49,8 @@ spec:
           limits:
             cpu: 100m
         volumeMounts:
+          - name: shared-files
+            mountPath: /var/www/html
           - name: nginx-mount
             mountPath: /var/www/html/docker/nginx/
             readOnly: true
@@ -55,6 +59,8 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
+          - name: shared-files
+            mountPath: /var/www/html
           - name: nginx-mount
             mountPath: /etc/nginx/sites-available/
 ---
