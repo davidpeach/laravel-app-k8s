@@ -48,13 +48,15 @@ spec:
             cpu: 100m
         volumeMounts:
           - name: nginx-mount
-            mountPath: /var/www/html/docker/default.nginx
+            mountPath: /var/www/html/docker/nginx/
             readOnly: true
       - name: nginx
         image: nginx
+        ports:
+        - containerPort: 80
         volumeMounts:
           - name: nginx-mount
-            mountPath: /etc/nginx/sites-available/default
+            mountPath: /etc/nginx/sites-available/
 ---
 
 apiVersion: cert-manager.io/v1
