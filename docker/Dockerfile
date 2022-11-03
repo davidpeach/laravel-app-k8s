@@ -38,14 +38,14 @@ ARG UID=1000
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
-RUN groupadd -g $UID $USER
-RUN useradd -u $UID -ms /bin/bash -g $USER $USER
+# RUN groupadd -g $UID $USER
+# RUN useradd -u $UID -ms /bin/bash -g $USER $USER
 
 RUN mkdir /data
-RUN chown ${USER}:$USER /data
+# RUN chown ${USER}:$USER /data
 
 RUN mkdir /nginx
-RUN chown ${USER}:$USER /nginx
+# RUN chown ${USER}:$USER /nginx
 
 
 WORKDIR /data
@@ -53,10 +53,10 @@ WORKDIR /data
 #     chown --recursive $USER:$USER /var/www
 
 # Change current user to dynamic user for app setup
-USER $USER
+# USER $USER
 
-COPY --chown=${USER}:${USER} database/ database/
-COPY --chown=${USER}:${USER} composer.json composer.lock ./
+# COPY --chown=${USER}:${USER} database/ database/
+# COPY --chown=${USER}:${USER} composer.json composer.lock ./
 
 RUN composer install \
         --ignore-platform-reqs \
@@ -69,8 +69,8 @@ RUN php artisan env:decrypt --env=production --key=${LARAVEL_ENV_ENCRYPTION_KEY}
 RUN rm .env && mv .env.production .env
 
 # Add general application code last to preserve cache as much as possible
-COPY --chown=${USER}:${USER} . .
-COPY --chown=${USER}:${USER} ./docker/nginx/* /nginx/
+# COPY --chown=${USER}:${USER} . .
+# COPY --chown=${USER}:${USER} ./docker/nginx/* /nginx/
 
 # RUN rm -rf public
 # COPY --chown=${USER}:${USER} public/index.php public/index.php
