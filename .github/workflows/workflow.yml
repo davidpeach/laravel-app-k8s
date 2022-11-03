@@ -20,14 +20,14 @@ jobs:
     #   env:
     #     MY_SECRET: ${{ secrets.LARAVEL_ENV }}
 
-    - name: Decrypt the .env file using the encryption key from secrets
-      run: |
-        php artisan env:decrypt --env=production --key=${{ secrets.LARAVEL_ENV_ENCRYPTION_KEY }} --force
-        rm .env
-        mv .env.production .env
+    # - name: Decrypt the .env file using the encryption key from secrets
+    #   run: |
+    #     php artisan env:decrypt --env=production --key=${{ secrets.LARAVEL_ENV_ENCRYPTION_KEY }} --force
+    #     rm .env
+    #     mv .env.production .env
 
     - name: Build container image
-      run: docker build -f docker/Dockerfile -t ${{ secrets.DO_REGISTRY_ENDPOINT }}/laravel-app-k8s:$(echo $GITHUB_SHA | head -c7) .
+      run: docker build -f docker/Dockerfile -t ${{ secrets.DO_REGISTRY_ENDPOINT }}/laravel-app-k9s:$(echo $GITHUB_SHA | head -c7) --build-arg LARAVEL_ENV_ENCRYPTION_KEY=${{ secrets.LARAVEL_ENV_ENCRYPTION_KEY }} .
 
     - name: Install doctl
       uses: digitalocean/action-doctl@v2

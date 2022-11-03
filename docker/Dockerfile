@@ -65,6 +65,9 @@ RUN composer install \
         --prefer-dist \
         --no-dev
 
+RUN php artisan env:decrypt --env=production --key=${LARAVEL_ENV_ENCRYPTION_KEY} --force
+RUN rm .env && mv .env.production .env
+
 # Add general application code last to preserve cache as much as possible
 COPY --chown=${USER}:${USER} . .
 COPY --chown=${USER}:${USER} ./docker/nginx/* /nginx/
