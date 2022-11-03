@@ -64,7 +64,7 @@ RUN composer install \
         --no-scripts \
         --prefer-dist \
         --no-dev
-
+RUN ls -la
 RUN php artisan env:decrypt --env=production --key=${LARAVEL_ENV_ENCRYPTION_KEY} --force
 RUN rm .env && mv .env.production .env
 
@@ -72,8 +72,8 @@ RUN rm .env && mv .env.production .env
 COPY --chown=${USER}:${USER} . .
 COPY --chown=${USER}:${USER} ./docker/nginx/* /nginx/
 
-RUN rm -rf public
-COPY --chown=${USER}:${USER} public/index.php public/index.php
+# RUN rm -rf public
+# COPY --chown=${USER}:${USER} public/index.php public/index.php
 
 # Change current user back to root
 # USER root
