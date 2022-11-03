@@ -10,10 +10,11 @@ RUN apt-get update \
     && echo "UTC" > /etc/timezone \
     && dpkg-reconfigure -f noninteractive tzdata
 
-ARG USER=www
-ARG UID=1000
+# ARG USER=www
+# ARG UID=1000
 
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
+
+
 
 # RUN groupadd -g $UID $USER
 # RUN useradd -u $UID -ms /bin/bash -g $USER $USER
@@ -24,6 +25,11 @@ RUN mkdir /data
 RUN mkdir /nginx
 # RUN chown ${USER}:$USER /nginx
 
+WORKDIR /data
+
+COPY . .
+
+RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
 # WORKDIR /data
 # RUN sed -i "1s/.*/user $USER;/" /etc/nginx/nginx.conf && \
@@ -41,13 +47,12 @@ RUN composer install \
         --no-scripts \
         --prefer-dist \
         --no-dev
-RUN ls -la
+
 RUN php artisan env:decrypt --env=production --key=${LARAVEL_ENV_ENCRYPTION_KEY} --force
 RUN rm .env && mv .env.production .env
 
-WORKDIR /data
 
-COPY . .
+# COPY . .
 
 # Add general application code last to preserve cache as much as possible
 # COPY --chown=${USER}:${USER} . .
