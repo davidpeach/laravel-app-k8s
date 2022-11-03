@@ -14,7 +14,7 @@ RUN apt-get update \
 # ARG UID=1000
 
 
-
+RUN echo $LARAVEL_ENV_ENCRYPTION_KEY
 
 # RUN groupadd -g $UID $USER
 # RUN useradd -u $UID -ms /bin/bash -g $USER $USER
