@@ -48,7 +48,7 @@ RUN composer install \
         --prefer-dist \
         --no-dev
 
-RUN php artisan env:decrypt --env=production --key=${LARAVEL_ENV_ENCRYPTION_KEY} --force
+RUN php artisan env:decrypt --env=production --key=$LARAVEL_ENV_ENCRYPTION_KEY --force
 RUN rm .env && mv .env.production .env
 
 
