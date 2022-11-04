@@ -26,4 +26,4 @@ RUN composer install \
         --no-dev
 
 RUN --mount=type=secret,id=LARAVEL_ENV_ENCRYPTION_KEY,dst=/etc/secrets/laravel php artisan env:decrypt --env=production --key=$(cat /etc/secrets/laravel) --force
-RUN rm .env && mv .env.production .env
+RUN mv .env.production .env
