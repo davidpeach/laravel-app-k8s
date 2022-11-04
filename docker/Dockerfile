@@ -2,7 +2,7 @@
 
 FROM php:8.1.12-fpm
 
-RUN --mount=type=secret,id=LARAVEL_ENV_ENCRYPTION_KEY cat /etc/secrets/LARAVEL_ENV_ENCRYPTION_KEY
+RUN --mount=type=secret,id=LARAVEL_ENV_ENCRYPTION_KEY cat /run/secrets/LARAVEL_ENV_ENCRYPTION_KEY
 
 ENV DEBIAN_FRONTEND=noninteractive
 
