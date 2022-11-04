@@ -1,3 +1,5 @@
+# syntax = docker/dockerfile:1.2
+
 FROM php:8.1.12-fpm
 
 ENV DEBIAN_FRONTEND=noninteractive
