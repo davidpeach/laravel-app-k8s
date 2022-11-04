@@ -10,14 +10,10 @@ RUN apt-get update \
     && dpkg-reconfigure -f noninteractive tzdata
 
 RUN mkdir /data
-RUN mkdir /nginx
 
 WORKDIR /data
 
 COPY --chown=www-data:www-data . .
-COPY ./docker/nginx/* /nginx/
-
-RUN chmod -R 775 /data
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
