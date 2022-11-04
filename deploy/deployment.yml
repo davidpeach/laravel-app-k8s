@@ -56,7 +56,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "cp -r /data/. /var/www/html/ && cp -r /nginx/. /lol"]
+              command: ["/bin/sh", "-c", "cp -r /data/. /var/www/html/ && chown -R www-data:www-data /var/www/html && cp -r /nginx/. /lol"]
       - name: nginx
         image: nginx
         ports:
