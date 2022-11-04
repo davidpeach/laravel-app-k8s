@@ -14,8 +14,11 @@ RUN mkdir /nginx
 
 WORKDIR /data
 
-COPY . .
+COPY --chown=www-data:www-data . .
 COPY ./docker/nginx/* /nginx/
+
+RUN chown -R www-data:www-data /data
+RUN chmod -R 755 /data
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
