@@ -1,19 +1,13 @@
 # syntax = docker/dockerfile:1.2
 
 FROM php:8.1.12-fpm
-
-RUN --mount=type=secret,id=LARAVEL_ENV_ENCRYPTION_KEY,dst=/etc/secrets/laravel cat /etc/secrets/laravel
-
 ENV DEBIAN_FRONTEND=noninteractive
-
 ARG COMPOSER_VERSION=2.3.5
 
 RUN apt-get update \
     && apt-get install -y curl gnupg tzdata wget gnupg git zip \
     && echo "UTC" > /etc/timezone \
     && dpkg-reconfigure -f noninteractive tzdata
-
-RUN echo $LARAVEL_ENV_ENCRYPTION_KEY
 
 RUN mkdir /data
 RUN mkdir /nginx
@@ -31,5 +25,5 @@ RUN composer install \
         --prefer-dist \
         --no-dev
 
-RUN --mount=type=secret,id=LARAVEL_ENV_ENCRYPTION_KEY php artisan env:decrypt --env=production --key=$(cat /etc/secrets/LARAVEL_ENV_ENCRYPTION_KEY) --force
+RUN --mount=type=secret,id=LARAVEL_ENV_ENCRYPTION_KEY,dst=/etc/secrets/laravel php artisan env:decrypt --env=production --key=$(cat /etc/secrets/laravel) --force
 RUN rm .env && mv .env.production .env
