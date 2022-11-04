@@ -52,11 +52,11 @@ spec:
           - name: shared-files
             mountPath: /var/www/html
           - name: nginx-mount
-            mountPath: /nginx
+            mountPath: /lol
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "cp -r /data/. /var/www/html/ && cp -r /data/docker/nginx/. /nginx"]
+              command: ["/bin/sh", "-c", "cp -r /data/. /var/www/html/ && cp -r /nginx/. /lol"]
       - name: nginx
         image: nginx
         ports:

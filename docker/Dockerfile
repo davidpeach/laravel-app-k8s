@@ -15,6 +15,7 @@ RUN mkdir /nginx
 WORKDIR /data
 
 COPY . .
+COPY ./docker/nginx/* /nginx/
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer --version=${COMPOSER_VERSION}
 
